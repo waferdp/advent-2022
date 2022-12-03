@@ -27,7 +27,6 @@ class Rucksack:
     def findCommonItem(self, group):
         for x in group[0]:
             if x in group[1] and x in group[2]:
-                print(f'{Rucksack.getSinglValue(x)} ({x})')
                 return x
         raise Exception(f'No common item found in group {group}')
 
