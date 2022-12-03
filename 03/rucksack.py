@@ -3,10 +3,18 @@ import readFile as file
 class Rucksack:
 
     doubles = []
+    groups = []
 
     def __init__(self, input):
-        self.doubles = self.parseLines(input)
+        #self.doubles = self.parseLines(input)
+        self.doubles = self.parseGroups(input)
         
+    def parseGroups(self, input):
+        groups = []
+        for g in range(len(input)//3):
+            i = g * 3
+            groups.append([input[i], input[i+1], input[i+2]])
+        return list(map(self.findCommonItem, groups))
 
     def parseLines(self, input):
         doubles = []
@@ -16,6 +24,14 @@ class Rucksack:
             doubles.append(Rucksack.findDouble(left, right))
         return doubles
 
+    def findCommonItem(self, group):
+        for x in group[0]:
+            if x in group[1] and x in group[2]:
+                print(f'{Rucksack.getSinglValue(x)} ({x})')
+                return x
+        raise Exception(f'No common item found in group {group}')
+
+
     def getValues(self):
         values = 0
         for item in self.doubles:
@@ -23,6 +39,7 @@ class Rucksack:
         return values
 
     def getSinglValue(item):
+        assert(len(item) == 1)
         if item.isupper():
             return ord(item) - 64 + 26
         else:
