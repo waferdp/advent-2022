@@ -22,6 +22,8 @@ class Matrix2d:
             return self.default
         
     def set(self, x, y, value):
+        if y >= self.height or x >= self.width:
+            return
         if y not in self.matrix:
             self.matrix[y] = {}
         self.matrix[y][x] = value

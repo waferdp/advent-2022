@@ -23,5 +23,13 @@ class TestMatrix(unittest.TestCase):
         value = matrix.get(1, 0)
         assert('Anything' == value)
 
+    def testSetOutOfBounds_doesnt(self):
+        matrix = Matrix2d(2, 2)
+        matrix.set(0, 0, 'Anything')
+        matrix.set(0, 1, 'Anything')
+        matrix.set(0, 2, 'Anything')
+        assert(len(matrix.matrix) == 2)
+
+
 if __name__ == '__main__':
     unittest.main()
