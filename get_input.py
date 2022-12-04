@@ -1,6 +1,7 @@
 import requests
 import datetime
 import json
+import os
 
 def saveTestInput(dayOfMonth):
     url = f'https://adventofcode.com/2022/day/{int(dayOfMonth)}'
@@ -28,7 +29,15 @@ def saveInput(dayOfMonth):
         print(f'{response.status_code}: {response.content}')
 
 
+def createFolder(dayOfMonth):
+    directory = os.path.join(os.getcwd(), dayOfMonth)
+    if not os.path.exists(directory):
+        print(f'{directory} does not exist, creating it...')
+        os.mkdir(directory)
+    else:
+        print(f'{directory} already exists')
 
 dayOfMonth = datetime.date.today().strftime('%d')
+createFolder(dayOfMonth)
 saveTestInput(dayOfMonth)
 saveInput(dayOfMonth)
