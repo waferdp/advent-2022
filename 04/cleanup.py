@@ -25,8 +25,17 @@ class Cleanup:
             return True
         return False 
 
+    def isPartialOverlap(pair):
+        (l1,l2),(r1,r2) = pair
+        if l2 < r1 or l1 > r2:
+            return False
+        if r2 < l1 or r1 > r2:
+            return False
+        return True
+
     def output(self):
-        return len(list(filter(Cleanup.isFullrOverLap, self.pairs)))
+        #return len(list(filter(Cleanup.isFullrOverLap, self.pairs)))
+        return len(list(filter(Cleanup.isPartialOverlap, self.pairs)))
 
 
 lines = file.read('test_input.txt')
