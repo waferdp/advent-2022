@@ -4,12 +4,6 @@ from tuning import Tuning
 
 class TestTuning(unittest.TestCase):
     
-    def testStringMutation(self):
-        text = 'abcc'
-        areDifferent = Tuning.areAllDifferent(text)
-        assert('abcc' == text)
-        assert(False == areDifferent)
-
     def testFindStartFirstMessage(self):
         testData = file.read('test_input.txt')[0]
         tuning = Tuning(testData)
