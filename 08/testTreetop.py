@@ -35,10 +35,26 @@ class TestTreetop(unittest.TestCase):
         notVisible = (False, False, False, False)
         self.__testVisibilityGeneric(3, 3, expected= notVisible)
 
-    def testInput(self):
+    def testVisibleTrees(self):
         input = fileReader.read('test_input.txt')
         treetop = Treetop(input)
         assert(treetop.getVisibleTrees() == 21)
+
+    def testTopMiddleScore(self):
+        input = fileReader.read('test_input.txt')
+        treetop = Treetop(input)
+        assert(treetop.getTreeScore(x=2, y=1) == 4)
+
+    def testBottomMiddleScore(self):
+        input = fileReader.read('test_input.txt')
+        treetop = Treetop(input)
+        assert(treetop.getTreeScore(x=2, y=3) == 8)
+
+
+    def testTopScore(self):
+        input = fileReader.read('test_input.txt')
+        treetop = Treetop(input)
+        assert(treetop.getTopScore() == 8)
 
 
 if __name__ == '__main__':

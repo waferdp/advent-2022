@@ -40,7 +40,33 @@ class Treetop:
                     visible += 1
         return visible
     
+    def getTreeScore(self, x, y):
+        treeHeight = self.trees.get(x, y)
+        above = self.countLower(self.trees.getAbove(x, y)[::-1], treeHeight)
+        below = self.countLower(self.trees.getBelow(x, y), treeHeight)
+        left = self.countLower(self.trees.getLeft(x, y)[::-1], treeHeight)
+        right = self.countLower(self.trees.getRight(x, y), treeHeight)
+
+        score = above * left * below * right
+        return score
+
+    def getTopScore(self):
+        topScore = 0
+        for y in range(0, self.trees.height):
+            for x in range(0, self.trees.width):
+                topScore = max(topScore, self.getTreeScore(x, y))
+        return topScore
+
+    def countLower(self, trees, treeHeight):
+        count = 0
+        for tree in trees:
+            count +=1
+            if tree >= treeHeight:
+                return count
+        return count
+
 if __name__ == '__main__':
     input = fileReader.read('input.txt')
     treetop = Treetop(input)
     print(treetop.getVisibleTrees())
+    print(treetop.getTopScore())
