@@ -11,10 +11,15 @@ class Direction(str, Enum):
 class Rope:
 
     def __init__(self, input):
-        self.head = (0,0) 
-        self.tail = (0,0) 
-        self.visited = {self.tail}
+        self.rope = self.generateRope()
+        self.visited = {self.rope[-1]}
         self.moves = self.parseMoves(input)
+
+    def generateRope(self):
+        rope = []
+        for x in range(10):
+            rope.append((0,0))
+        return rope
 
     def parseMoves(self, input):
         moves = []
@@ -32,8 +37,9 @@ class Rope:
         inc = Rope.directionToMove(move[0])
         for x in range(steps):
             self.moveHead(inc)
-            self.followTail()
-            self.visited.add(self.tail)
+            for i in range(1,len(self.rope)):
+                self.rope[i] = self.followTail(self.rope[i], self.rope[i-1])
+            self.visited.add(self.rope[-1])
         
 
     def directionToMove(dir):
@@ -44,22 +50,23 @@ class Rope:
             case Direction.RIGHT: return (1,0)
 
     def moveHead(self, dir):
-        x,y = self.head
+        x,y = self.rope[0]
         dirX, dirY = dir
-        self.head = (x + dirX, y + dirY)
+        self.rope[0] = (x + dirX, y + dirY)
 
-    def followTail(self):
-        if self.tail == self.head:
-            return
-        direction = (self.head[0] - self.tail[0], self.head[1] - self.tail[1])
+    def followTail(self, tail, head):
+        if tail == head:
+            return tail
+        direction = (head[0] - tail[0], head[1] - tail[1])
         dx, dy = direction
 
         if abs(dx) <= 1 and abs(dy) <= 1:
-            return
+            return tail
 
         nx, ny = 0 if dx == 0 else dx//abs(dx), 0 if dy == 0 else dy//abs(dy)
-        tx,ty = self.tail
-        self.tail = tx + nx, ty + ny
+        tx,ty = tail
+        tail = tx + nx, ty + ny
+        return tail
         
 if __name__ == '__main__':
     input = fileReader.read('input.txt')
