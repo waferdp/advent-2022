@@ -15,6 +15,11 @@ class TestCathode(unittest.TestCase):
         assert(cathode.signal[220] == 3960)
         assert(cathode.getTotal() == 13140)
 
+    def testPrint(self):
+        input = fileReader.read('test_input.txt')
+        expected = fileReader.read('test_expected.txt')
+        cathode = Cathode(input)
+        assert(expected == cathode.matrix.listOfStrings())
 
 if __name__ == '__main__':
     unittest.main()
