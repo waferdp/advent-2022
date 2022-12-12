@@ -10,16 +10,16 @@ class HeightMap(Matrix2d):
         left = self.get(x-1,y)
         right = self.get(x+1,y)
 
-        if abs(above - height) <= 1:
+        if above - height <= 1:
             possible.append((x, y-1))
         
-        if abs(below - height) <= 1:
+        if below - height <= 1:
             possible.append((x, y+1))
 
-        if abs(left - height) <= 1:
+        if left - height <= 1:
             possible.append((x-1, y))
             
-        if abs(right - height) <= 1:
+        if right - height <= 1:
             possible.append((x+1, y))
 
         return possible

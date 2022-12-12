@@ -16,5 +16,24 @@ class TestClimbing(unittest.TestCase):
         climbing.step()
         assert(len(climbing.paths) == 2)
 
+    def testClimb(self):
+        input = fileReader.read('test_input.txt')
+        climbing = Climbing(input)
+        shortestPath = climbing.climb()
+        assert(shortestPath == 31)
+
+    def testMoreStarts(self):
+        input = fileReader.read('test_input.txt')
+        climbing = Climbing(input)
+        climbing.moreStarts()
+        assert(len(climbing.paths) == 6)
+        
+    def testClimbWithManyStarts(self):
+        input = fileReader.read('test_input.txt')
+        climbing = Climbing(input)
+        climbing.moreStarts()
+        shortestPath = climbing.climb()
+        assert(shortestPath == 29)
+
 if __name__ == '__main__':
     unittest.main()

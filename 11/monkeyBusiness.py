@@ -22,7 +22,7 @@ class MonkeyBusiness:
 
     def findSmallestDenominator(self):
         divisors = [m.test[0] for m in list(self.monkeys.values())]
-        return math.prod(divisors)
+        return math.prod(divisors)  
 
     def findMonkeys(self, input):
         monkeys = []
