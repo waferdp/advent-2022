@@ -4,6 +4,7 @@ from monkey import Ref
 from monkey import Monkey
 from functools import reduce
 import fileReader
+import math
 
 class MonkeyBusiness:
 
@@ -21,13 +22,7 @@ class MonkeyBusiness:
 
     def findSmallestDenominator(self):
         divisors = [m.test[0] for m in list(self.monkeys.values())]
-        number = max(divisors)
-        while True:
-            divisible = [number % div == 0 for div in divisors]
-            if all(divisible):
-                return number
-            else:
-                number += 1
+        return math.prod(divisors)
 
     def findMonkeys(self, input):
         monkeys = []
