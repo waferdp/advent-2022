@@ -1,5 +1,6 @@
 import fileReader
 import collections.abc
+import json
 
 class Distress:
 
@@ -15,7 +16,7 @@ class Distress:
                 pairs.append((pair[0], pair[1]))
                 pair = []
             else:
-                pair.append(eval(line))
+                pair.append(json.loads(line))
         pairs.append(pair)
         return pairs
 
