@@ -37,7 +37,26 @@ def createFolder(dayOfMonth):
     else:
         print(f'{directory} already exists')
 
+def updateTestSettings(dayOfMonth):
+    
+    with open('./.vscode/settings.json', 'r') as file:
+        settings = json.load(file)
+    if f'./{dayOfMonth}' not in settings['python.testing.unittestArgs']:
+        print('Adding todays folder to settings unittestArgs')
+        settings['python.testing.unittestArgs'] = [
+            "-v",
+            "-s",
+            f"./{dayOfMonth}",
+            "-p",
+            "test*.py"
+        ]
+        with open('./.vscode/settings.json', 'w') as file:
+            json.dump(settings , file, indent=4)
+    else:
+        print('Todays folder already in settings unittestArgs')
+
 dayOfMonth = datetime.date.today().strftime('%d')
 createFolder(dayOfMonth)
 saveTestInput(dayOfMonth)
 saveInput(dayOfMonth)
+updateTestSettings(dayOfMonth)

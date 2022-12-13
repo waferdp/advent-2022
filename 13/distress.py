@@ -23,7 +23,7 @@ class Distress:
         indices = []
         for i in range(0, len(self.pairs)):
             pair = self.pairs[i]
-            if self.isRightOrder(pair[0], pair[1]) < 0:
+            if self.compareTo(pair[0], pair[1]) < 0:
                 indices.append(i+1)
         return sum(indices)
 
@@ -47,7 +47,7 @@ class Distress:
         for x in xs:
             inserted = False
             for i in range(0, len(sorted)):
-                if self.isRightOrder(x, sorted[i]) <= 0:
+                if self.compareTo(x, sorted[i]) <= 0:
                     sorted.insert(i, x)
                     inserted = True
                     break
@@ -70,7 +70,7 @@ class Distress:
         i = 0
         j = 0
         while i < len(left) and j < len(right):
-            if self.isRightOrder(left[i], right[j]) < 1:
+            if self.compareTo(left[i], right[j]) < 1:
                 sorted.append(left[i])
                 i += 1
             else:
@@ -79,10 +79,10 @@ class Distress:
         sorted = sorted + left[i:] + right[j:]
         return sorted
 
-    def isRightOrder(self, a, b):
+    def compareTo(self, a, b):
         isArray = list((map(self.isArray, [a, b])))
         if not any(isArray):
-            return self.compare(a,b)
+            return self.compareElems(a,b)
         if all(isArray):
             return self.compareArrays(a, b)
         if self.isArray(a):
@@ -100,14 +100,14 @@ class Distress:
                 return 1
             elif ac is None and bc is None:
                 return 0
-            comparison = self.isRightOrder(ac, bc)
+            comparison = self.compareTo(ac, bc)
             if comparison:
                 return comparison
 
     def isArray(self, x):
         return isinstance(x, collections.abc.Sequence)
 
-    def compare(self, a, b):
+    def compareElems(self, a, b):
         return (a > b) - (a < b)
 
 if __name__ == '__main__':
