@@ -32,7 +32,6 @@ class Distress:
         packets = []
         for pair in self.pairs:
             packets += pair
-        #packets = self.shitSort(packets)
         packets = self.mergeSort(packets)
         return packets
 
@@ -41,20 +40,6 @@ class Distress:
         div2 = sorted.index([[2]]) + 1
         div6 = sorted.index([[6]]) + 1
         return div2 * div6
-        
-    # Tried implementing more elegant sorting, but decided against it
-    def shitSort(self, xs):
-        sorted = []
-        for x in xs:
-            inserted = False
-            for i in range(0, len(sorted)):
-                if self.compareTo(x, sorted[i]) <= 0:
-                    sorted.insert(i, x)
-                    inserted = True
-                    break
-            if not inserted:
-                sorted.append(x)
-        return sorted
 
     def mergeSort(self, xs):
         mid = len(xs) // 2
