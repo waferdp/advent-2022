@@ -7,7 +7,7 @@ class TestDistress(unittest.TestCase):
     def testDistress(self):
         input = fileReader.read('test_input.txt')
         distress = Distress(input)
-        assert(len(distress.pairs) == 8)
+        assert(len(distress.pairs) == 9)
         assert(len(distress.pairs[0][0]) == 5)
 
     def testOrder1(self):
@@ -59,10 +59,16 @@ class TestDistress(unittest.TestCase):
         assert(comparison == 1)
 
     def testSumIndices(self):
-        input = fileReader.read('test_input.txt')
-        distress = Distress(input)
-        sum = distress.goodPairs()
-        assert(sum == 13)
+            input = fileReader.read('test_input.txt')
+            distress = Distress(input)
+            sum = distress.goodPairs()
+            assert(sum == 22)
+
+    def testFindPackets(self):
+            input = fileReader.read('test_input.txt')
+            distress = Distress(input)
+            product = distress.findDividers()
+            assert(product == 140)
 
 if __name__ == '__main__':
     unittest.main()

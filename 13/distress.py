@@ -5,6 +5,7 @@ class Distress:
 
     def __init__(self, input):
         self.pairs = self.findPairs(input)
+        self.pairs.append(([[2]], [[6]]))
 
     def findPairs(self, input):
         pairs = []
@@ -22,12 +23,61 @@ class Distress:
         indices = []
         for i in range(0, len(self.pairs)):
             pair = self.pairs[i]
-            if self.isRightOrder(pair[0], pair[1]):
-                indices.append(i)
+            if self.isRightOrder(pair[0], pair[1]) < 0:
+                indices.append(i+1)
         return sum(indices)
+
+    def getSorted(self):
+        packets = []
+        for pair in self.pairs:
+            packets += pair
+        #packets = self.shitSort(packets)
+        packets = self.mergeSort(packets)
+        return packets
+
+    def findDividers(self):
+        sorted = self.getSorted()
+        div2 = sorted.index([[2]]) + 1
+        div6 = sorted.index([[6]]) + 1
+        return div2 * div6
         
-        comparisons = list(filter(lambda comp: comp < 0, map(lambda a,b: self.isRightOrder(a,b), self.pairs)))
-        return len(comparisons)
+    # Tried implementing more elegant sorting, but decided against it
+    def shitSort(self, xs):
+        sorted = []
+        for x in xs:
+            inserted = False
+            for i in range(0, len(sorted)):
+                if self.isRightOrder(x, sorted[i]) <= 0:
+                    sorted.insert(i, x)
+                    inserted = True
+                    break
+            if not inserted:
+                sorted.append(x)
+        return sorted
+
+    def mergeSort(self, xs):
+        mid = len(xs) // 2
+        left = xs[:mid]
+        right = xs[mid:]
+        if len(left) > 1 and len(right) > 1:
+            left = self.mergeSort(left)
+            right = self.mergeSort(right)
+        merged = self.merge(left, right)
+        return merged 
+
+    def merge(self, left, right):
+        sorted = []
+        i = 0
+        j = 0
+        while i < len(left) and j < len(right):
+            if self.isRightOrder(left[i], right[j]) < 1:
+                sorted.append(left[i])
+                i += 1
+            else:
+                sorted.append(right[j])
+                j += 1
+        sorted = sorted + left[i:] + right[j:]
+        return sorted
 
     def isRightOrder(self, a, b):
         isArray = list((map(self.isArray, [a, b])))
@@ -41,9 +91,9 @@ class Distress:
             return self.compareArrays([a], b)
 
     def compareArrays(self, a , b):
-        while True:
-            ac = a.pop(0) if len(a) else None
-            bc = b.pop(0) if len(b) else None
+        for i in range(0, (max(len(a), len(b)))):
+            ac = a[i] if len(a) > i else None
+            bc = b[i] if len(b) > i else None
             if ac is None and bc is not None:
                 return -1
             elif ac is not None and bc is None:
@@ -59,3 +109,11 @@ class Distress:
 
     def compare(self, a, b):
         return (a > b) - (a < b)
+
+if __name__ == '__main__':
+    input = fileReader.read('input.txt')
+    distress = Distress(input)
+    sum = distress.goodPairs()
+    product = distress.findDividers()
+    print(sum)
+    print(product)
