@@ -1,20 +1,28 @@
 
 class Matrix2d:
     matrix = None
-    width = 0
-    height = 0
+    maxX = 0
+    maxY = 0
+    minX = 0
+    minY = 0
     default = None
 
     def __init__(self, width, height, default = None):
         self.matrix = {}
-        self.width = width
-        self.height = height
+        self.minX = 0
+        self.minY = 0
+        self.maxX = width - 1
+        self.maxY = height - 1
         self.default = default
 
     def get(self, x, y):
-        if x < 0 or y < 0:
+        if x < self.minX or y < self.minY:
             return self.default
-        if x >= self.width or y >= self.height:
+        if x > self.maxX or y > self.maxY:
+            return self.default
+        if y not in self.matrix:
+            return self.default
+        if x not in self.matrix[y]:
             return self.default
         try:
             return self.matrix[y][x]
@@ -22,8 +30,41 @@ class Matrix2d:
             return self.default
         
     def set(self, x, y, value):
-        if y >= self.height or x >= self.width:
-            return
+        self.minX = min(self.minX, x)
+        self.maxX = max(self.maxX, x)
+        self.minY = min(self.minY, y)
+        self.maxY = max(self.maxY, y)
+
         if y not in self.matrix:
             self.matrix[y] = {}
+        
         self.matrix[y][x] = value
+
+    def width(self):
+        return self.maxX - self.minX + 1
+
+    def height(self):
+        return self.maxX - self.minX + 1
+
+    def __repr__(self):
+        return self.draw()
+
+    def draw(self):
+        lines = []
+        for y in range(self.minY, self.maxX+1):
+            line = ''
+            for x in range(self.minX, self.maxY+1):
+                line += self.get(x,y)
+            lines.append(line)
+            line = ''
+        return lines    
+
+class FixMatrix2d(Matrix2d):
+    
+    def set(self, x ,y, value):
+        if self.minY <= y <= self.maxY and self.minX <= x <= self.maxX:
+            return super().set(x, y, value)
+        else:
+            return
+
+

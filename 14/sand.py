@@ -12,7 +12,6 @@ class Sand:
         self.origin = (500 - minX, 0)
         self.cave = self.makeCave(big)
         self.big = big
-        #self.cave = Cave(width=maxX+1, height= maxY+1, default='.')
         self.cave.set(self.origin[0], self.origin[1], '+')
         self.cave.strokes(self.rockVectors, '#')
 
@@ -32,15 +31,6 @@ class Sand:
 
     def makeCave(self, bigger = False):
         (maxx, maxy) = self.getMinMax()[2:]      
-        # if bigger:
-        #     # "pyramid" width will be (height + 2) * 2, add 2 extra on each side to match test picture
-        #     height = maxy + 1 + 2
-        #     width = height * 2 + 2
-        #     padLeft = (self.origin[0] // (width // 2))
-        #     padOrigin = self.origin[0] + pad
-        #     self.translateRocksX(self.rockVectors, pad)
-        #     self.origin[0] += padOrigin
-        # else:
         height = maxy + 1
         width = maxx + 1
         return Cave(width=width, height= height, default='.', expando= bigger)
@@ -80,8 +70,9 @@ class Sand:
             count += 1
         if self.big:
             return count
-        # The last sand went to infinity, so remove it from the count
-        return count-1
+        else:
+            # The last sand unit went to infinity, so remove it from the count
+            return count-1
 
 if __name__ == '__main__':
     input = fileReader.read('input.txt')

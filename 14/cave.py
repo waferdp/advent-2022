@@ -4,9 +4,9 @@ class Cave(Matrix2d):
 
 
     def __init__(self, width, height, default, expando):
-        super().__init__(width, height, default, expando)
-        self.floor = height
-
+        super().__init__(width, height, default)
+        self.floor = height + (1 if expando else 0)
+        self.expando = expando
 
     def strokes(self, strokes, value):
         for stroke in strokes:
@@ -18,14 +18,13 @@ class Cave(Matrix2d):
                 self.set(x, y, value)
 
     def get(self,x, y):
-        if y > self.floor:
+        if y >= self.floor and self.expando:
             return '#' 
         return super().get(x, y)
 
     def dropOne(self, origin):
         (x, y) = origin
-        maxy = self.height + 2 if self.expando else self.height
-        while y < maxy:
+        while y <= self.floor:
             below = self.get(x, y+1)
             downLeft = self.get(x-1,y+1)
             downRight = self.get(x+1,y+1)
@@ -41,16 +40,3 @@ class Cave(Matrix2d):
                 self.set(x, y, 'o')
                 return y == 0
         return True
-
-    def __repr__(self):
-        return self.draw()
-
-    def draw(self):
-        lines = []
-        for y in range(self.miny, self.height):
-            line = ''
-            for x in range(self.minx, self.width):
-                line += self.get(x,y)
-            lines.append(line)
-            line = ''
-        return lines
