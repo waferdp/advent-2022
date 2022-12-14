@@ -16,14 +16,6 @@ class Matrix2d:
         self.default = default
 
     def get(self, x, y):
-        if x < self.minX or y < self.minY:
-            return self.default
-        if x > self.maxX or y > self.maxY:
-            return self.default
-        if y not in self.matrix:
-            return self.default
-        if x not in self.matrix[y]:
-            return self.default
         try:
             return self.matrix[y][x]
         except:

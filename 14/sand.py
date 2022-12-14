@@ -2,6 +2,7 @@ from matrix import Matrix2d
 from cave import Cave
 import fileReader
 import json
+import time
 
 class Sand:
 
@@ -81,6 +82,8 @@ if __name__ == '__main__':
     count = sand.dropSand()
     print(count)
 
+    start = time.time()
     sand = Sand(input, True)
     count = sand.dropSand()
+    print("--- %s seconds ---" % (time.time() - start))
     print(count)
