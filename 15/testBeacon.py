@@ -10,5 +10,11 @@ class testBeacon(unittest.TestCase):
         verify = fileReader.read('test_verify.txt')
         assert(beacon.caves.draw() == verify)
 
+    def testSensorRange(self):
+        input = fileReader.read('test_input.txt')
+        beacon = Beacon(input)
+        assert(beacon.sensors[8][2] == 3)
+
+
 if __name__ == '__main__':
     unittest.main()
