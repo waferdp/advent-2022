@@ -36,7 +36,7 @@ class Matrix2d:
         return self.maxX - self.minX + 1
 
     def height(self):
-        return self.maxX - self.minX + 1
+        return self.maxY - self.minY + 1
 
     def __repr__(self):
         return self.draw()
