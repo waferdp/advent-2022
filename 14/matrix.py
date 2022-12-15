@@ -7,13 +7,14 @@ class Matrix2d:
     minY = 0
     default = None
 
-    def __init__(self, width, height, default = None):
+    def __init__(self, width, height, default = None, expando = True):
         self.matrix = {}
         self.minX = 0
         self.minY = 0
         self.maxX = width - 1
         self.maxY = height - 1
         self.default = default
+        self.expando = expando
 
     def get(self, x, y):
         try:

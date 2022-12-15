@@ -43,20 +43,46 @@ class Matrix2d:
 
     def draw(self):
         lines = []
-        for y in range(self.minY, self.maxY+1):
-            line = ''
-            for x in range(self.minX, self.maxX+1):
-                line += self.get(x,y)
-            lines.append(line)
-            line = ''
-        return lines    
+        return [self.drawLine(y) for y in range(self.minY, self.maxY+1)]
+    
+    def drawLine(self, y):
+        return ''.join([self.get(x, y) for x in range(self.minX, self.maxX+1)])
+
+    def find(self, value):
+        for y in self.matrix:
+            keys = list(filter(lambda k: self.minX <= k <= self.maxX, ([k for k in self.matrix[y]])))
+            missing = self.missing_elements(keys)
+            if len(missing) and missing[0] > 0:
+                return missing[0], y
+        return None
+
+    def missing_elements(self, L):
+        start, end = L[0], L[-1]
+        return sorted(set(range(start, end + 1)).difference(L))
 
 class FixMatrix2d(Matrix2d):
     
+    def __init__(self, other: Matrix2d):
+        super().__init__(width=1, height=1, default=other.default)
+        self.minX = other.minX
+        self.minY = other.minY
+        self.maxX = other.maxX
+        self.maxY = other.maxY
+        self.default = other.default
+        self.matrix = other.matrix
+
     def set(self, x ,y, value):
         if self.minY <= y <= self.maxY and self.minX <= x <= self.maxX:
             return super().set(x, y, value)
         else:
             return
+
+    def min(self, num: int):
+        self.minX = num
+        self.minY = num
+
+    def max(self, num: int):
+        self.maxX = num
+        self.maxY = num
 
 

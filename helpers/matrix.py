@@ -43,6 +43,7 @@ class Matrix2d:
 
     def draw(self):
         lines = []
+        return [self.drawLine(y) for y in range]
         for y in range(self.minY, self.maxY+1):
             line = ''
             for x in range(self.minX, self.maxX+1):
@@ -50,6 +51,9 @@ class Matrix2d:
             lines.append(line)
             line = ''
         return lines    
+    
+    def drawLine(self, y):
+        return ''.join([self.get(x, y) for x in range(self.minX, self.maxX+1)])
 
 class FixMatrix2d(Matrix2d):
     
