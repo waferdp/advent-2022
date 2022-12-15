@@ -5,6 +5,7 @@ import re
 class Beacon:
     def __init__(self, input):
         parsed = self.parseRows(input)
+        self.sensors = self.parseSensorRanges(parsed)
         self.caves = self.mapCaves(parsed)
 
     def parseRows(self, input):
@@ -21,4 +22,11 @@ class Beacon:
             caves.set(bx, by, 'B')
         return caves
         
+    def parseSensorRanges(self, parsed):
+        return list(map(self.parseSensor, parsed))
 
+    def parseSensor(self, sb):
+        sx, sy, bx, by =  sb
+        distance= (abs(bx - sx) + abs(by-sy))
+        return (sx, sy, distance)
+        
