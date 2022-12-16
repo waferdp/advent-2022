@@ -53,9 +53,7 @@ class Climbing:
             x,y = path[-1]
             possible = self.map.getPaths(x,y)
             for next in possible:
-                if next in path:
-                    continue
-                elif next in self.visited:
+                if next in self.visited:
                     continue
                 else:
                     newPaths.append(path + [next])
