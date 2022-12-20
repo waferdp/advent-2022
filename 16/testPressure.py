@@ -13,8 +13,17 @@ class testPressure(unittest.TestCase):
         input = fileReader.read('test_input.txt')
         pressure = Pressure(input)
         pressure.graph.setFlowValves()
+        pressure.time = 30
         flowed = pressure.maxPressure()
         assert(flowed == 1651)
+
+    def testSearch2(self):
+        input = fileReader.read('test_input.txt')
+        pressure = Pressure(input)
+        pressure.graph.setFlowValves()
+        flowed = pressure.double()
+        assert(flowed == 1707)
+
 
     def testGetFlow(self):
         input = fileReader.read('test_input.txt')
@@ -27,8 +36,23 @@ class testPressure(unittest.TestCase):
             'EE': 21,
             'CC': 24
         }
+        pressure.time = 30
         flowed = pressure.getFlow(opened)
         assert(flowed == 1651)
+
+    # def testGetFlow2(self):
+    #     input = fileReader.read('test_input.txt')
+    #     pressure = Pressure(input)
+    #     opened = {
+    #         'DD': 2,
+    #         'JJ': 3,
+    #         'BB': 7,
+    #         'HH': 7,
+    #         'CC': 9,
+    #         'EE': 11,
+    #     }
+    #     flowed = pressure.getFlow(opened)
+    #     assert(flowed == 1651)
 
     # def testWithElephant(self):
     #     input = fileReader.read('test_input.txt')
