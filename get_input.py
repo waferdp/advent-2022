@@ -2,6 +2,7 @@ import requests
 import datetime
 import json
 import os
+import sys
 
 def saveTestInput(dayOfMonth):
     url = f'https://adventofcode.com/2022/day/{int(dayOfMonth)}'
@@ -55,7 +56,11 @@ def updateTestSettings(dayOfMonth):
     else:
         print('Todays folder already in settings unittestArgs')
 
-dayOfMonth = datetime.date.today().strftime('%d')
+args = sys.argv[1:]
+if len(args) > 0:
+    dayOfMonth = args[0]
+else:
+    dayOfMonth = datetime.date.today().strftime('%d')
 createFolder(dayOfMonth)
 saveTestInput(dayOfMonth)
 saveInput(dayOfMonth)
